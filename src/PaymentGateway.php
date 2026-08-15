@@ -19,59 +19,59 @@ interface PaymentGateway
         bool $sandbox = false,
         array $extra = [],
     );
-    
+
     /**
      * Driver name of the gateway.
-     * 
+     *
      * @return string
      */
     public function getName(): string;
 
     /**
      * Display name of the gateway.
-     * 
+     *
      * @return string
      */
     public function displayName(?string $locale = null): string;
 
     /**
      * Return the configuration inputs for this gateway.
-     * 
+     *
      * @return array
      */
     public static function configFields(): array;
 
     /**
      * Build a gateway from filled inputs.
-     * 
+     *
      * @return self
      */
     public static function fromFields(array $fields): self;
 
     /**
      * Return the gateway's configuration as filled inputs.
-     * 
+     *
      * @return array
      */
     public function toFields(): array;
 
     /**
      * Build a gateway from a serialized config array.
-     * 
+     *
      * @return self
      */
     public static function fromArray(array $config): self;
 
     /**
      * Serialize the gateway's configuration, including the driver name.
-     * 
+     *
      * @return string
      */
     public function toArray(): array;
 
     /**
      * Get the Guzzle HTTP Client.
-     * 
+     *
      * @return Client
      */
     public function client(): Client;
