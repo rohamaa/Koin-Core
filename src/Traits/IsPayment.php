@@ -11,9 +11,9 @@ use Rohama\Translator\Translator;
 trait IsPayment
 {
     public function __construct(
-        public readonly string $apiKey,
-        public readonly ?string $callbackUrl = null,
-        public readonly bool $sandbox = false,
+        public string $apiKey,
+        public ?string $callbackUrl = null,
+        public bool $sandbox = false,
         public array $extra = [],
     ) {}
 
