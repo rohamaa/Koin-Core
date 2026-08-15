@@ -39,26 +39,26 @@ interface PaymentGateway
      * 
      * @return array
      */
-    public function configFields(): array;
+    public static function configFields(): array;
 
     /**
      * Build a gateway from filled inputs.
      * 
-     * @return string
+     * @return self
      */
     public static function fromFields(array $fields): self;
 
     /**
-     * Return the filled inputs.
+     * Return the gateway's configuration as filled inputs.
      * 
-     * @return string
+     * @return array
      */
-    public function toFields(array $fields): array;
+    public function toFields(): array;
 
     /**
      * Build a gateway from a serialized config array.
      * 
-     * @return string
+     * @return self
      */
     public static function fromArray(array $config): self;
 
