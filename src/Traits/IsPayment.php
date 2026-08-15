@@ -15,7 +15,8 @@ trait IsPayment
         public ?string $callbackUrl = null,
         public bool $sandbox = false,
         public array $extra = [],
-    ) {}
+    ) {
+    }
 
     protected Client $client;
 

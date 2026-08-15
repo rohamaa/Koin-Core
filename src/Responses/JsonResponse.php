@@ -14,11 +14,17 @@ class JsonResponse implements Redactable, JsonSerializable
     public function __construct(
         public array $data,
         public ResponseInterface $response,
-    ) {}
+    ) {
+    }
 
     public function __get(string $name): mixed
     {
         return $this->data[$name] ?? null;
+    }
+
+    public function __put(string $name, mixed $value): void
+    {
+        $this->data[$name] = $value;
     }
 
     public function jsonSerialize(): array
