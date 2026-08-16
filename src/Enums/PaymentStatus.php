@@ -17,6 +17,6 @@ enum PaymentStatus: string
      */
     public function name(?string $locale = null): string
     {
-        return Translator::trans('payment_status.'.$this->value, locale: $locale ?? Translator::getDefaultLocale());
+        return Translator::trans('Koin:payment_status.'.$this->value, [], $locale);
     }
 }

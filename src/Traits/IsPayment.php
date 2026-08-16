@@ -37,7 +37,7 @@ trait IsPayment
 
     public function displayName(?string $locale = null): string
     {
-        return Translator::trans(self::name.'.name', locale: $locale ?? Translator::getDefaultLocale());
+        return Translator::trans('Koin-'.self::name.':driver.name', [], $locale);
     }
 
     public static function configFields(): array

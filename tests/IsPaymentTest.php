@@ -7,12 +7,7 @@ final class IsPaymentTest extends TestCase
 {
     protected function setUp(): void
     {
-        Translator::reset();
-    }
-
-    protected function tearDown(): void
-    {
-        Translator::reset();
+        Translator::setDefaultLocale('en');
     }
 
     public function testConstructorSetsTheFields(): void
@@ -42,18 +37,16 @@ final class IsPaymentTest extends TestCase
         $this->assertSame('test', $gateway->getName());
     }
 
-    public function testDisplayNameFallsBackToTheRawKey(): void
+    public function testDisplayNameReturnsTheKeyWhenNoTranslationExists(): void
     {
         $gateway = new TestGateway('k');
 
-        $this->assertSame('test.name', $gateway->displayName());
-        $this->assertSame('test.name', $gateway->displayName('fa'));
+        $this->assertSame('Koin-test:driver.name', $gateway->displayName());
+        $this->assertSame('Koin-test:driver.name', $gateway->displayName('de'));
     }
 
     public function testDisplayNameResolvesAnOverride(): void
     {
-        Translator::setTranslations('fa', ['test.name' => 'درگاه تست']);
-
         $gateway = new TestGateway('k');
 
         $this->assertSame('درگاه تست', $gateway->displayName('fa'));

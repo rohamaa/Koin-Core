@@ -7,12 +7,7 @@ final class PaymentStatusTest extends TestCase
 {
     protected function setUp(): void
     {
-        Translator::reset();
-    }
-
-    protected function tearDown(): void
-    {
-        Translator::reset();
+        Translator::setDefaultLocale('en');
     }
 
     public function testCaseValues(): void

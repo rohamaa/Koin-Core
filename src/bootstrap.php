@@ -2,4 +2,4 @@
 
 use Rohama\Translator\Translator;
 
-Translator::register(dirname(__DIR__) . '/lang');
+Translator::register('Koin', dirname(__DIR__) . '/lang');

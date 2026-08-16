@@ -22,7 +22,7 @@ class PaymentException extends \RuntimeException implements Redactable
 
     public function message(?string $locale = null): string
     {
-        return Translator::trans('messages.'.$this->getMessage(), [], $this->getMessage(), $locale ?? Translator::getDefaultLocale());
+        return Translator::trans('Koin:messages.'.$this->getMessage(), [], $locale);
     }
 
     public function redacted(): array

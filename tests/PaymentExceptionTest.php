@@ -12,12 +12,7 @@ final class PaymentExceptionTest extends TestCase
 {
     protected function setUp(): void
     {
-        Translator::reset();
-    }
-
-    protected function tearDown(): void
-    {
-        Translator::reset();
+        Translator::setDefaultLocale('en');
     }
 
     public function testConstructorCarriesCode(): void
@@ -51,18 +46,16 @@ final class PaymentExceptionTest extends TestCase
         $this->assertSame('o1', $e->redacted()['order']);
     }
 
-    public function testMessageFallsBackToEnglishWhenNoTranslationExists(): void
+    public function testMessageReturnsTheKeyWhenNoTranslationExists(): void
     {
-        $e = new InvalidRequestException('Amount must be greater than zero.');
+        $e = new InvalidRequestException('Payment was not found.');
 
-        $this->assertSame('Amount must be greater than zero.', $e->message('fa'));
-        $this->assertSame('Amount must be greater than zero.', $e->message());
+        $this->assertSame('Koin:messages.Payment was not found.', $e->message('fa'));
+        $this->assertSame('Koin:messages.Payment was not found.', $e->message());
     }
 
     public function testMessageResolvesAnOverride(): void
     {
-        Translator::setTranslations('fa', ['messages.Amount must be greater than zero.' => 'مبلغ باید بزرگ تر از صفر باشد.']);
-
         $e = new InvalidRequestException('Amount must be greater than zero.');
 
         $this->assertSame('مبلغ باید بزرگ تر از صفر باشد.', $e->message('fa'));
