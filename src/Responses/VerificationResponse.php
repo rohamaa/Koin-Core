@@ -13,7 +13,7 @@ class VerificationResponse extends JsonResponse
         public PaymentStatus $status,
         public string $transactionId,
         public ?string $referenceId = null,
-        public ?int $amount = null,
+        public int|float|null $amount = null,
         public ?string $cardNumber = null,
         public ?string $message = null,
     ) {

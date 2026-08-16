@@ -146,4 +146,9 @@ trait IsPayment
     {
         return $this->client;
     }
+
+    public function setClient(Client $client): void
+    {
+        $this->client = $client;
+    }
 }
