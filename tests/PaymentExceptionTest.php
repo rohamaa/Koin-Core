@@ -46,17 +46,31 @@ final class PaymentExceptionTest extends TestCase
         $this->assertSame('o1', $e->redacted()['order']);
     }
 
-    public function testMessageReturnsTheKeyWhenNoTranslationExists(): void
+    public function testMessageReturnsTheMessageWhenNoTranslationExists(): void
     {
         $e = new InvalidRequestException('Payment was not found.');
 
-        $this->assertSame('Koin:messages.Payment was not found.', $e->message('fa'));
-        $this->assertSame('Koin:messages.Payment was not found.', $e->message());
+        $this->assertSame('Payment was not found.', $e->message('fa'));
+        $this->assertSame('Payment was not found.', $e->message());
     }
 
     public function testMessageResolvesAnOverride(): void
     {
         $e = new InvalidRequestException('Amount must be greater than zero.');
+
+        $this->assertSame('مبلغ باید بزرگ تر از صفر باشد.', $e->message('fa'));
+    }
+
+    public function testMessageResolvesGatewayNamespacedOverride(): void
+    {
+        $e = new InvalidRequestException('Amount must be greater than zero.', gateway: 'test');
+
+        $this->assertSame('مبلغ باید بزرگ تر از صفر باشد.', $e->message('fa'));
+    }
+
+    public function testMessageFallsBackToGenericNamespaceWhenGatewayOverrideMissing(): void
+    {
+        $e = new InvalidRequestException('Amount must be greater than zero.', gateway: 'other');
 
         $this->assertSame('مبلغ باید بزرگ تر از صفر باشد.', $e->message('fa'));
     }
