@@ -1,6 +1,5 @@
 <?php
 
-use Rohama\Koin\Enums\PaymentStatus;
 use Rohama\Koin\Responses\FeeResponse;
 use Rohama\Koin\Responses\JsonResponse;
 use Rohama\Koin\Responses\PaymentResponse;
@@ -9,6 +8,7 @@ use Rohama\Koin\Responses\ReverseResponse;
 use Rohama\Koin\Responses\TransactionsResponse;
 use Rohama\Koin\Responses\UnverifiedResponse;
 use Rohama\Koin\Responses\VerificationResponse;
+use Rohama\Koin\Support\PaymentStatus;
 
 final class ResponsesTest extends TestCase
 {

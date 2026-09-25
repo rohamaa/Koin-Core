@@ -2,7 +2,7 @@
 
 namespace Rohama\Koin;
 
-use Rohama\Koin\Enums\Currency;
+use Rohama\Koin\Exception\PaymentException;
 use Rohama\Koin\Responses\FeeResponse;
 
 /**
@@ -14,7 +14,7 @@ interface FeeCalculatorGateway
      * Calculate the gateway fee for an amount.
      *
      * @return FeeResponse
-     * @throws \Rohama\Koin\Exception\PaymentException
+     * @throws PaymentException
      */
-    public function calculateFee(int $amount, ?Currency $currency = null): FeeResponse;
+    public function calculateFee(int $amount, ?string $currency = null): FeeResponse;
 }

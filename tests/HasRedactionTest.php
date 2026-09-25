@@ -6,7 +6,7 @@ final class HasRedactionTest extends TestCase
 {
     private function redactor(): object
     {
-        return new class {
+        return new class () {
             use HasRedaction;
 
             public function run(array $array, array $keys): array
@@ -18,7 +18,7 @@ final class HasRedactionTest extends TestCase
 
     public function testSensitiveKeysListsCredentialLikeKeys(): void
     {
-        $keys = (new class {
+        $keys = (new class () {
             use HasRedaction;
 
             public function list(): array

@@ -2,7 +2,7 @@
 
 namespace Rohama\Koin;
 
-use Rohama\Koin\Enums\Currency;
+use Rohama\Koin\Exception\PaymentException;
 use Rohama\Koin\Responses\VerificationResponse;
 
 /**
@@ -14,13 +14,13 @@ interface InquiryGateway
      * Inquire the current status of a payment.
      *
      * @return VerificationResponse
-     * @throws \Rohama\Koin\Exception\PaymentException
+     * @throws PaymentException
      */
     public function inquiry(
         string $transactionId,
         string $orderId = '',
         ?int $amount = null,
-        ?Currency $currency = null,
+        ?string $currency = null,
         array $extra = [],
     ): VerificationResponse;
 }

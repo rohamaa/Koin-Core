@@ -110,12 +110,11 @@ trait IsPayment
 
     public function toFields(): array
     {
-        return [
+        return array_merge([
             'apiKey' => $this->apiKey,
             'callbackUrl' => $this->callbackUrl,
             'sandbox' => $this->sandbox,
-            ...$this->extra,
-        ];
+        ], $this->extra);
     }
 
     public static function fromArray(array $config): PaymentGateway

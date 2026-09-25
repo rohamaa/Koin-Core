@@ -3,14 +3,14 @@
 namespace Rohama\Koin\Responses;
 
 use Psr\Http\Message\ResponseInterface;
-use Rohama\Koin\Enums\PaymentStatus;
+use Rohama\Koin\Support\PaymentStatus;
 
 class RefundResponse extends JsonResponse
 {
     public function __construct(
         array $data,
         ResponseInterface $response,
-        public PaymentStatus $status,
+        public string $status,
         public string $transactionId,
         public ?string $referenceId = null,
         public ?string $message = null,

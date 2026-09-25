@@ -3,7 +3,8 @@
 namespace Rohama\Koin;
 
 use GuzzleHttp\Client;
-use Rohama\Koin\Enums\Currency;
+use Rohama\Koin\Exception\PaymentException;
+use Rohama\Koin\Exception\VerificationFailedException;
 use Rohama\Koin\Requests\Callback;
 use Rohama\Koin\Responses\PaymentResponse;
 use Rohama\Koin\Responses\VerificationResponse;
@@ -65,7 +66,7 @@ interface PaymentGateway
     /**
      * Serialize the gateway's configuration, including the driver name.
      *
-     * @return string
+     * @return array
      */
     public function toArray(): array;
 
@@ -80,7 +81,7 @@ interface PaymentGateway
      * Ask the gateway to initiate a payment and return the redirect target.
      *
      * @return PaymentResponse
-     * @throws \Rohama\Koin\Exception\PaymentException
+     * @throws PaymentException
      */
     public function request(
         int $amount,
@@ -89,7 +90,7 @@ interface PaymentGateway
         string $description = '',
         ?string $mobile = null,
         ?string $email = null,
-        ?Currency $currency = null,
+        ?string $currency = null,
         array $metadata = [],
         array $extra = [],
     ): PaymentResponse;
@@ -97,8 +98,9 @@ interface PaymentGateway
     /**
      * Parse a raw incoming callback into a structured result.
      *
-     * @param array $query
-     * @param array $body
+     * @param  array  $query  the raw query parameters
+     * @param  array  $body  the raw request body
+     *
      * @return Callback
      */
     public function parseCallback(array $query, array $body): Callback;
@@ -107,13 +109,13 @@ interface PaymentGateway
      * Verify an incoming payment callback for a previously requested payment.
      *
      * @return VerificationResponse
-     * @throws \Rohama\Koin\Exception\VerificationFailedException
+     * @throws VerificationFailedException
      */
     public function verify(
         string $transactionId,
         string $orderId = '',
         ?int $amount = null,
-        ?Currency $currency = null,
+        ?string $currency = null,
         array $extra = [],
     ): VerificationResponse;
 }

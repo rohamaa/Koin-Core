@@ -2,7 +2,7 @@
 
 namespace Rohama\Koin;
 
-use Rohama\Koin\Enums\Currency;
+use Rohama\Koin\Exception\PaymentException;
 use Rohama\Koin\Responses\RefundResponse;
 
 /**
@@ -14,13 +14,13 @@ interface RefundableGateway
      * Refund a previously verified payment.
      *
      * @return RefundResponse
-     * @throws \Rohama\Koin\Exception\PaymentException
+     * @throws PaymentException
      */
     public function refund(
         string $transactionId,
         string $orderId = '',
         ?int $amount = null,
-        ?Currency $currency = null,
+        ?string $currency = null,
         array $extra = [],
     ): RefundResponse;
 }

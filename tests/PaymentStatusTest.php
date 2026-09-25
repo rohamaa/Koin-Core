@@ -1,6 +1,6 @@
 <?php
 
-use Rohama\Koin\Enums\PaymentStatus;
+use Rohama\Koin\Support\PaymentStatus;
 use Rohama\Translator\Translator;
 
 final class PaymentStatusTest extends TestCase
@@ -12,29 +12,29 @@ final class PaymentStatusTest extends TestCase
 
     public function testCaseValues(): void
     {
-        $this->assertSame('pending', PaymentStatus::PENDING->value);
-        $this->assertSame('success', PaymentStatus::SUCCESS->value);
-        $this->assertSame('failed', PaymentStatus::FAILED->value);
-        $this->assertSame('canceled', PaymentStatus::CANCELED->value);
-        $this->assertSame('refunded', PaymentStatus::REFUNDED->value);
+        $this->assertSame('pending', PaymentStatus::PENDING);
+        $this->assertSame('success', PaymentStatus::SUCCESS);
+        $this->assertSame('failed', PaymentStatus::FAILED);
+        $this->assertSame('canceled', PaymentStatus::CANCELED);
+        $this->assertSame('refunded', PaymentStatus::REFUNDED);
     }
 
     public function testNameResolvesEnglishByDefault(): void
     {
-        $this->assertSame('Successful', PaymentStatus::SUCCESS->name());
-        $this->assertSame('Pending', PaymentStatus::PENDING->name('en'));
+        $this->assertSame('Successful', PaymentStatus::name(PaymentStatus::SUCCESS));
+        $this->assertSame('Pending', PaymentStatus::name(PaymentStatus::PENDING, 'en'));
     }
 
     public function testNameResolvesALocale(): void
     {
-        $this->assertSame('موفق', PaymentStatus::SUCCESS->name('fa'));
-        $this->assertSame('لغو شده', PaymentStatus::CANCELED->name('fa'));
+        $this->assertSame('موفق', PaymentStatus::name(PaymentStatus::SUCCESS, 'fa'));
+        $this->assertSame('لغو شده', PaymentStatus::name(PaymentStatus::CANCELED, 'fa'));
     }
 
     public function testNameFollowsTheDefaultLocale(): void
     {
         Translator::setDefaultLocale('fa');
 
-        $this->assertSame('موفق', PaymentStatus::SUCCESS->name());
+        $this->assertSame('موفق', PaymentStatus::name(PaymentStatus::SUCCESS));
     }
 }

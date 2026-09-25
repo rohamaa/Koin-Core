@@ -3,7 +3,6 @@
 namespace Rohama\Koin\Requests;
 
 use JsonSerializable;
-use Rohama\Koin\Enums\PaymentStatus;
 
 /**
  * Parsed gateway callback returned by parseCallback().
@@ -11,7 +10,7 @@ use Rohama\Koin\Enums\PaymentStatus;
 class Callback implements JsonSerializable
 {
     public function __construct(
-        public PaymentStatus $status,
+        public string $status,
         public string $transactionId,
         public string $orderId = '',
         public array $extra = [],
@@ -30,11 +29,10 @@ class Callback implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
-            'status' => $this->status->value,
+        return array_merge([
+            'status' => $this->status,
             'transactionId' => $this->transactionId,
             'orderId' => $this->orderId,
-            ...$this->extra,
-        ];
+        ], $this->extra);
     }
 }

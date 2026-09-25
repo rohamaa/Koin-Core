@@ -1,12 +1,12 @@
 <?php
 
 use GuzzleHttp\Client;
-use Rohama\Koin\Enums\Currency;
-use Rohama\Koin\Enums\PaymentStatus;
+use GuzzleHttp\Psr7\Response;
 use Rohama\Koin\PaymentGateway;
 use Rohama\Koin\Requests\Callback;
 use Rohama\Koin\Responses\PaymentResponse;
 use Rohama\Koin\Responses\VerificationResponse;
+use Rohama\Koin\Support\PaymentStatus;
 use Rohama\Koin\Traits\IsPayment;
 
 /**
@@ -36,15 +36,15 @@ class PlainTestGateway implements PaymentGateway
         string $description = '',
         ?string $mobile = null,
         ?string $email = null,
-        ?Currency $currency = null,
+        ?string $currency = null,
         array $metadata = [],
         array $extra = [],
     ): PaymentResponse {
         return new PaymentResponse(
             [],
-            new \GuzzleHttp\Psr7\Response(200),
+            new Response(200),
             PaymentStatus::PENDING,
-            'tx-' . $orderId,
+            'tx-'.$orderId,
             'https://plain.example/pay',
             $orderId,
         );
@@ -59,9 +59,9 @@ class PlainTestGateway implements PaymentGateway
         string $transactionId,
         string $orderId = '',
         ?int $amount = null,
-        ?Currency $currency = null,
+        ?string $currency = null,
         array $extra = [],
     ): VerificationResponse {
-        return new VerificationResponse([], new \GuzzleHttp\Psr7\Response(200), PaymentStatus::SUCCESS, $transactionId);
+        return new VerificationResponse([], new Response(200), PaymentStatus::SUCCESS, $transactionId);
     }
 }

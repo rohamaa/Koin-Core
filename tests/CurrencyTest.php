@@ -1,77 +1,77 @@
 <?php
 
-use Rohama\Koin\Enums\Currency;
+use Rohama\Koin\Support\Currency;
 
 final class CurrencyTest extends TestCase
 {
     public function testTomanIsToman(): void
     {
-        $this->assertTrue(Currency::TOMAN->isToman());
-        $this->assertFalse(Currency::RIAL->isToman());
+        $this->assertTrue(Currency::isToman(Currency::TOMAN));
+        $this->assertFalse(Currency::isToman(Currency::RIAL));
     }
 
     public function testToRialMultipliesTomanByTen(): void
     {
-        $this->assertSame(100, Currency::TOMAN->toRial(10));
-        $this->assertSame(0, Currency::TOMAN->toRial(0));
+        $this->assertSame(100, Currency::toRial(Currency::TOMAN, 10));
+        $this->assertSame(0, Currency::toRial(Currency::TOMAN, 0));
     }
 
     public function testToRialLeavesRialUntouched(): void
     {
-        $this->assertSame(10, Currency::RIAL->toRial(10));
+        $this->assertSame(10, Currency::toRial(Currency::RIAL, 10));
     }
 
     public function testToTomanLeavesTomanUntouched(): void
     {
-        $this->assertSame(10, Currency::TOMAN->toToman(10));
+        $this->assertSame(10, Currency::toToman(Currency::TOMAN, 10));
     }
 
     public function testToTomanDividesRialByTen(): void
     {
-        $this->assertSame(10, Currency::RIAL->toToman(100));
+        $this->assertSame(10, Currency::toToman(Currency::RIAL, 100));
     }
 
     public function testFromRialDividesTomanByTen(): void
     {
-        $this->assertSame(10, Currency::TOMAN->fromRial(100));
+        $this->assertSame(10, Currency::fromRial(Currency::TOMAN, 100));
     }
 
     public function testFromRialKeepsFractionalToman(): void
     {
-        $this->assertSame(10.5, Currency::TOMAN->fromRial(105));
+        $this->assertSame(10.5, Currency::fromRial(Currency::TOMAN, 105));
     }
 
     public function testFromRialLeavesRialUntouched(): void
     {
-        $this->assertSame(100, Currency::RIAL->fromRial(100));
+        $this->assertSame(100, Currency::fromRial(Currency::RIAL, 100));
     }
 
     public function testFromTomanMultipliesRialByTen(): void
     {
-        $this->assertSame(1000, Currency::RIAL->fromToman(100));
+        $this->assertSame(1000, Currency::fromToman(Currency::RIAL, 100));
     }
 
     public function testFromTomanLeavesTomanUntouched(): void
     {
-        $this->assertSame(100, Currency::TOMAN->fromToman(100));
+        $this->assertSame(100, Currency::fromToman(Currency::TOMAN, 100));
     }
 
     public function testRoundTripToRialAndBack(): void
     {
-        $this->assertSame(250, Currency::TOMAN->fromRial(Currency::TOMAN->toRial(250)));
-        $this->assertSame(250, Currency::RIAL->fromRial(Currency::RIAL->toRial(250)));
+        $this->assertSame(250, Currency::fromRial(Currency::TOMAN, Currency::toRial(Currency::TOMAN, 250)));
+        $this->assertSame(250, Currency::fromRial(Currency::RIAL, Currency::toRial(Currency::RIAL, 250)));
     }
 
     public function testRoundTripToTomanAndBack(): void
     {
-        $this->assertSame(250, Currency::TOMAN->toToman(Currency::TOMAN->fromToman(250)));
-        $this->assertSame(250, Currency::RIAL->toToman(Currency::RIAL->fromToman(250)));
+        $this->assertSame(250, Currency::toToman(Currency::TOMAN, Currency::fromToman(Currency::TOMAN, 250)));
+        $this->assertSame(250, Currency::toToman(Currency::RIAL, Currency::fromToman(Currency::RIAL, 250)));
     }
 
     public function testRoundTripKeepsFractionalTomanExact(): void
     {
-        $rial = Currency::TOMAN->toRial(10.5);
-        $toman = Currency::TOMAN->fromRial($rial);
+        $rial = Currency::toRial(Currency::TOMAN, 10.5);
+        $toman = Currency::fromRial(Currency::TOMAN, $rial);
 
         $this->assertSame(105.0, $rial);
         $this->assertSame(10.5, $toman);
@@ -79,7 +79,7 @@ final class CurrencyTest extends TestCase
 
     public function testStringValues(): void
     {
-        $this->assertSame('IRT', Currency::TOMAN->value);
-        $this->assertSame('IRR', Currency::RIAL->value);
+        $this->assertSame('IRT', Currency::TOMAN);
+        $this->assertSame('IRR', Currency::RIAL);
     }
 }

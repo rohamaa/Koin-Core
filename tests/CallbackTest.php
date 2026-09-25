@@ -1,7 +1,7 @@
 <?php
 
-use Rohama\Koin\Enums\PaymentStatus;
 use Rohama\Koin\Requests\Callback;
+use Rohama\Koin\Support\PaymentStatus;
 
 final class CallbackTest extends TestCase
 {
