@@ -1,6 +1,6 @@
 - [Introduction](README.md)
-- [Usage](usage.md)
 - [Installation](installation.md)
+- [Usage](usage.md)
 - [Core concepts](core-concepts.md)
 - Gateways
   - [IDPay](gateways/idpay.md)
