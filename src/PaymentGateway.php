@@ -19,6 +19,7 @@ interface PaymentGateway
         ?string $callbackUrl = null,
         bool $sandbox = false,
         array $extra = [],
+        bool $refundable = false,
     );
 
     /**

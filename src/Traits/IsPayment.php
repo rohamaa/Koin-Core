@@ -15,6 +15,7 @@ trait IsPayment
         public ?string $callbackUrl = null,
         public bool $sandbox = false,
         public array $extra = [],
+        public bool $refundable = false,
     ) {
     }
 

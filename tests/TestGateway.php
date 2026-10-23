@@ -25,8 +25,9 @@ class TestGateway implements PaymentGateway, SandboxGateway
         ?string $callbackUrl = null,
         bool $sandbox = false,
         array $extra = [],
+        bool $refundable = false,
     ) {
-        $this->paymentConstruct($apiKey, $callbackUrl, $sandbox, $extra);
+        $this->paymentConstruct($apiKey, $callbackUrl, $sandbox, $extra, $refundable);
         $this->client = new Client();
     }
 
