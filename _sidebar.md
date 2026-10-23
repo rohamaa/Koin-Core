@@ -1,0 +1,13 @@
+- [Introduction](README.md)
+- [Usage](usage.md)
+- [Installation](installation.md)
+- [Core concepts](core-concepts.md)
+- Gateways
+  - [IDPay](gateways/idpay.md)
+  - [NextPay](gateways/nextpay.md)
+  - [PayPing](gateways/payping.md)
+  - [SADAD](gateways/sadad.md)
+  - [SEP (Bank Saman)](gateways/sep.md)
+  - [SizPay](gateways/sizpay.md)
+  - [ZarinPal](gateways/zarinpal.md)
+  - [Zibal](gateways/zibal.md)
