@@ -2,7 +2,8 @@
 
 namespace Rohama\Koin\Traits;
 
-use GuzzleHttp\Client;
+use Rohama\Koin\Http\Client;
+use Rohama\Koin\Http\GuzzleClient;
 use Rohama\Koin\Exception\InvalidConfigException;
 use Rohama\Koin\PaymentGateway;
 use Rohama\Koin\SandboxGateway;
@@ -19,7 +20,7 @@ trait IsPayment
     ) {
     }
 
-    protected Client $client;
+    protected ?Client $client = null;
 
     public function __get(string $name): mixed
     {
@@ -144,11 +145,27 @@ trait IsPayment
 
     public function client(): Client
     {
-        return $this->client;
+        return $this->client ??= new GuzzleClient($this->clientOptions());
     }
 
     public function setClient(Client $client): void
     {
         $this->client = $client;
     }
+
+    protected function baseUri(): string
+    {
+        return '';
+    }
+
+    protected function clientOptions(): array
+    {
+        return [
+            'base_uri' => $this->baseUri(),
+            'timeout' => (int) ($this->extra['timeout'] ?? 15),
+            'connect_timeout' => (int) ($this->extra['connect_timeout'] ?? 10),
+            'http_errors' => false,
+        ];
+    }
+
 }

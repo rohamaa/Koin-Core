@@ -1,6 +1,6 @@
 <?php
 
-use GuzzleHttp\Client;
+use Rohama\Koin\Http\GuzzleClient;
 use GuzzleHttp\Psr7\Response;
 use Rohama\Koin\PaymentGateway;
 use Rohama\Koin\Requests\Callback;
@@ -28,7 +28,7 @@ class TestGateway implements PaymentGateway, SandboxGateway
         bool $refundable = false,
     ) {
         $this->paymentConstruct($apiKey, $callbackUrl, $sandbox, $extra, $refundable);
-        $this->client = new Client();
+        $this->client = new GuzzleClient();
     }
 
     public static function configFields(): array

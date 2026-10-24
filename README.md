@@ -46,6 +46,38 @@ if ($callback->status === PaymentStatus::SUCCESS) {
 }
 ```
 
+## Custom HTTP client & timeouts
+
+Every driver talks HTTP through a deliberately small contract, `Rohama\Koin\Http\Client`, whose API **exactly mirrors Guzzle**: `get()` / `post()` / `delete()` with Guzzle-style option arrays (`query`, `json`, `form_params`, `headers`). (`psr/http-message: ResponseInterface` is the only external type involved.)
+
+```php
+// 1. Default — built-in Guzzle transport; tune timings via extra (seconds):
+$gateway = new ZibalGateway('key', null, false, ['timeout' => 30, 'connect_timeout' => 5]);
+
+// 2. Bring your own transport — extend the contract, implement one method:
+final class WpHttpClient extends \Rohama\Koin\Http\Client
+{
+    public function request(string $method, string $uri, array $options = []): ResponseInterface
+    {
+        $res = wp_remote_request(<your-base-url>.$uri, [
+            'method'  => strtoupper($method),
+            'headers' => $options['headers'] ?? [],
+            'body'    => isset($options['json']) ? json_encode($options['json']) : (($options['form_params'] ?? null) !== null ? http_build_query($options['form_params']) : null),
+            'timeout' => 20,
+        ]);
+        if (is_wp_error($res)) {
+            throw new \RuntimeException($res->get_error_message());
+        }
+
+        return new \GuzzleHttp\Psr7\Response($res['response']['code'], $res['headers'], $res['body']);
+    }
+}
+
+$gateway->setClient(new WpHttpClient);
+```
+
+The default is `Rohama\Koin\Http\GuzzleClient` (a Guzzle wrapper carrying the gateway's `base_uri`). If your custom transport receives relative `$uri`s, resolve them with the driver's API base URL yourself (you already know the provider you installed).
+
 ## Highlights
 
 - One interface for every gateway — switching a gateway is a one-line change

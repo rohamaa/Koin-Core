@@ -183,13 +183,15 @@ final class IsPaymentTest extends TestCase
     {
         $gateway = new TestGateway('k');
 
-        $this->assertInstanceOf(\GuzzleHttp\Client::class, $gateway->client());
+        $this->assertInstanceOf(\Rohama\Koin\Http\GuzzleClient::class, $gateway->client());
     }
 
     public function testSetClientReplacesTheClient(): void
     {
         $gateway = new TestGateway('k');
-        $mock = $this->mockHttp([[200, ['id' => 'i1']]]);
+        $mock = new \Rohama\Koin\Http\GuzzleClient(['handler' => new \GuzzleHttp\Handler\MockHandler([
+            new \GuzzleHttp\Psr7\Response(200, ['Content-Type' => 'application/json'], json_encode(['id' => 'i1'])),
+        ])]);
 
         $gateway->setClient($mock);
 

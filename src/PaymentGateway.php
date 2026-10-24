@@ -2,7 +2,7 @@
 
 namespace Rohama\Koin;
 
-use GuzzleHttp\Client;
+use Rohama\Koin\Http\Client;
 use Rohama\Koin\Exception\PaymentException;
 use Rohama\Koin\Exception\VerificationFailedException;
 use Rohama\Koin\Requests\Callback;
@@ -72,11 +72,16 @@ interface PaymentGateway
     public function toArray(): array;
 
     /**
-     * Get the Guzzle HTTP Client.
+     * Get the HTTP client.
      *
      * @return Client
      */
     public function client(): Client;
+
+    /**
+     * Use a custom HTTP client.
+     */
+    public function setClient(Client $client): void;
 
     /**
      * Ask the gateway to initiate a payment and return the redirect target.
